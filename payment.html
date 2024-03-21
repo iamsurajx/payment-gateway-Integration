@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment Page</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h2 class="text-center mb-5">Select Payment Method</h2>
+
+      <!-- Payment form 2 -->
+      <div class="row">
+        <div class="col-sm-6 offset-sm-3">
+          <article class="card">
+            <div class="card-body p-5">
+              <ul
+                class="nav bg-light nav-pills rounded nav-fill mb-3"
+                role="tablist"
+              >
+                <li class="nav-item">
+                  <a
+                    class="nav-link active"
+                    data-bs-toggle="pill"
+                    href="#nav-tab-card"
+                  >
+                    <i class="fa fa-credit-card"></i> Credit Card</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    data-bs-toggle="pill"
+                    href="#nav-tab-paypal"
+                  >
+                    <i class="fab fa-paypal"></i> Paypal</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    data-bs-toggle="pill"
+                    href="#nav-tab-bank"
+                  >
+                    <i class="fa fa-university"></i> Bank Transfer</a
+                  >
+                </li>
+              </ul>
+
+              <div class="tab-content">
+                <!-- Credit Card Tab -->
+                <div class="tab-pane fade show active" id="nav-tab-card">
+                  <p class="alert alert-success">Some text success or error</p>
+                  <form id="creditCardForm" role="form">
+                    <div class="form-group">
+                      <label for="username">Full Name (on the card)</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="username"
+                        placeholder="Enter your full name"
+                        required
+                      />
+                    </div>
+
+                    <div class="form-group">
+                      <label for="cardNumber">Card Number</label>
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="cardNumber"
+                          placeholder="Enter your card number"
+                        />
+                        <div class="input-group-append">
+                          <span class="input-group-text text-muted">
+                            <i class="fab fa-cc-visa"></i>  
+                            <i class="fab fa-cc-amex"></i>  
+                            <i class="fab fa-cc-mastercard"></i>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <div class="form-group">
+                          <label>Expiration</label>
+                          <div class="input-group">
+                            <input
+                              type="number"
+                              class="form-control"
+                              placeholder="MM"
+                              min="1"
+                              max="12"
+                              required
+                            />
+                            <input
+                              type="number"
+                              class="form-control"
+                              placeholder="YY"
+                              min="22"
+                              max="99"
+                              required
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="form-group">
+                          <label
+                            >CVV <i class="fa fa-question-circle"></i
+                          ></label>
+                          <input type="number" class="form-control" required />
+                        </div>
+                      </div>
+                    </div>
+
+                    <button
+                      class="btn btn-primary btn-block"
+                      type="button"
+                      onclick="confirmPayment('Credit Card')"
+                    >
+                      Confirm
+                    </button>
+                  </form>
+                </div>
+
+                <!-- Paypal Tab -->
+                <div class="tab-pane fade" id="nav-tab-paypal">
+                  <p class="alert alert-success">Enter your Paypal details:</p>
+                  <form id="paypalForm" role="form" style="display: none">
+                    <div class="form-group">
+                      <label for="paypalEmail">Paypal Email</label>
+                      <input
+                        type="email"
+                        class="form-control"
+                        name="paypalEmail"
+                        placeholder="Enter your Paypal email"
+                        required
+                      />
+                    </div>
+                    <button
+                      class="btn btn-primary btn-block"
+                      type="button"
+                      onclick="confirmPayment('Paypal')"
+                    >
+                      Confirm
+                    </button>
+                  </form>
+                </div>
+
+                <!-- Bank Transfer Tab -->
+                <div class="tab-pane fade" id="nav-tab-bank">
+                  <p class="alert alert-success">Enter your Bank details:</p>
+                  <form id="bankTransferForm" role="form" style="display: none">
+                    <div class="form-group">
+                      <label for="bankName">Bank Name</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="bankName"
+                        placeholder="Enter your bank name"
+                        required
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="accountNumber">Account Number</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="accountNumber"
+                        placeholder="Enter your account number"
+                        required
+                      />
+                    </div>
+                    <button
+                      class="btn btn-primary btn-block"
+                      type="button"
+                      onclick="confirmPayment('Bank Transfer')"
+                    >
+                      Confirm
+                    </button>
+                  </form>
+                </div>
+              </div>
+              <!-- tab-content -->
+            </div>
+            <!-- card-body -->
+          </article>
+          <!-- card -->
+        </div>
+        <!-- col -->
+      </div>
+      <!-- row -->
+    </div>
+    <!-- container -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      function confirmPayment(paymentMethod) {
+        let message;
+        switch (paymentMethod) {
+          case "Credit Card":
+            message = "Payment confirmed using Credit Card";
+            break;
+          case "Paypal":
+            message = "Payment confirmed using Paypal";
+            break;
+          case "Bank Transfer":
+            message = "Payment confirmed using Bank Transfer";
+            break;
+          default:
+            message = "Invalid payment method";
+        }
+        alert(message);
+        window.location.href = "confirmation.html"; // Redirect to confirmation page
+      }
+
+      document
+        .getElementById("nav-tab-paypal")
+        .addEventListener("click", function () {
+          document.getElementById("paypalForm").style.display = "block";
+          document.getElementById("bankTransferForm").style.display = "none";
+        });
+
+      document
+        .getElementById("nav-tab-bank")
+        .addEventListener("click", function () {
+          document.getElementById("paypalForm").style.display = "none";
+          document.getElementById("bankTransferForm").style.display = "block";
+        });
+    </script>
+  </body>
+</html>
